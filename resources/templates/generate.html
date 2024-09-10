@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Certificate - Certificate Authority</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .container { margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Generate Certificate</h1>
+        <form action="/generate" method="post">
+            <div class="form-group">
+                <label for="commonName">Common Name (CN)</label>
+                <input type="text" class="form-control" id="commonName" name="commonName" required>
+            </div>
+            <div class="form-group">
+                <label for="organization">Organization (O)</label>
+                <input type="text" class="form-control" id="organization" name="organization" required>
+            </div>
+            <div class="form-group">
+                <label for="organizationalUnit">Organizational Unit (OU)</label>
+                <input type="text" class="form-control" id="organizationalUnit" name="organizationalUnit" required>
+            </div>
+            <div class="form-group">
+                <label for="locality">Locality (L)</label>
+                <input type="text" class="form-control" id="locality" name="locality" required>
+            </div>
+            <div class="form-group">
+                <label for="state">State (ST)</label>
+                <input type="text" class="form-control" id="state" name="state" required>
+            </div>
+            <div class="form-group">
+                <label for="country">Country (C)</label>
+                <input type="text" class="form-control" id="country" name="country" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Generate</button>
+        </form>
+        <hr>
+        <div th:if="${certificate}">
+            <h2 class="text-center">Generated Certificate</h2>
+            <p>Serial Number: <span th:text="${certificate.serialNumber}"></span></p>
+            <p>Common Name: <span th:text="${certificate.commonName}"></span></p>
+            <p>Organization: <span th:text="${certificate.organization}"></span></p>
+            <p>Issue Date: <span th:text="${certificate.issueDate}"></span></p>
+            <p>Expiry Date: <span th:text="${certificate.expiryDate}"></span></p>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

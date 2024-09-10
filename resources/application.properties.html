@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="/css/styles.css"/>
+    <title>View Certificates</title>
+</head>
+<body>
+    <h1>All Certificates</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Issuer</th>
+                <th>Not Before</th>
+                <th>Not After</th>
+                <th>Revoked</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="certificate : ${certificates}">
+                <td th:text="${certificate.subject}"></td>
+                <td th:text="${certificate.issuer}"></td>
+                <td th:text="${certificate.notBefore}"></td>
+                <td th:text="${certificate.notAfter}"></td>
+                <td th:text="${certificate.revoked}"></td>
+                <td>
+                    <form action="/revoke" method="post">
+                        <input type="hidden" name="id" th:value="${certificate.id}"/>
+                        <button type="submit">Revoke</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

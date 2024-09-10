@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Certificates - Certificate Authority</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .container { margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Issued Certificates</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Serial Number</th>
+                    <th>Common Name</th>
+                    <th>Organization</th>
+                    <th>Issue Date</th>
+                    <th>Expiry Date</th>
+                    <th>Revoked</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="certificate : ${certificates}">
+                    <td th:text="${certificate.serialNumber}"></td>
+                    <td th:text="${certificate.commonName}"></td>
+                    <td th:text="${certificate.organization}"></td>
+                    <td th:text="${certificate.issueDate}"></td>
+                    <td th:text="${certificate.expiryDate}"></td>
+                    <td th:text="${certificate.revoked ? 'Yes' : 'No'}"></td>
+                    <td>
+                        <form action="/revoke" method="post" style="display:inline;">
+                            <input type="hidden" name="id" th:value="${certificate.serialNumber}">
+                            <button type="submit" class="btn btn-danger btn-sm">Revoke</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <a href="/" class="btn btn-primary">Back to Home</a>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

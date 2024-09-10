@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Certificate - Certificate Authority</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .container { margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Verify Certificate</h1>
+        <form action="/verify" method="post">
+            <div class="form-group">
+                <label for="commonName">Common Name (CN)</label>
+                <input type="text" class="form-control" id="commonName" name="commonName" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Verify</button>
+        </form>
+        <hr>
+        <div class="mt-4" th:if="${certificate != null}">
+            <h2 class="text-center">Verification Result</h2>
+            <div th:if="${certificate.revoked}" class="alert alert-danger">
+                The certificate is invalid (revoked).
+            </div>
+            <div th:if="${!certificate.revoked}" class="alert alert-success">
+                The certificate is valid.
+            </div>
+
+            <h3>Certificate Details</h3>
+            <ul class="list-group">
+                <li class="list-group-item"><strong>Serial Number:</strong> <span th:text="${certificate.serialNumber}"></span></li>
+                <li class="list-group-item"><strong>Common Name:</strong> <span th:text="${certificate.commonName}"></span></li>
+                <li class="list-group-item"><strong>Organization:</strong> <span th:text="${certificate.organization}"></span></li>
+                <li class="list-group-item"><strong>Issue Date:</strong> <span th:text="${#dates.format(certificate.issueDate, 'yyyy-MM-dd HH:mm:ss')}"></span></li>
+                <li class="list-group-item"><strong>Expiry Date:</strong> <span th:text="${#dates.format(certificate.expiryDate, 'yyyy-MM-dd HH:mm:ss')}"></span></li>
+            </ul>
+        </div>
+        <div class="mt-4" th:if="${certificate == null}">
+            <p class="text-danger">Certificate not found or invalid.</p>
+        </div>
+        <a href="/" class="btn btn-primary mt-3">Back to Home</a>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
